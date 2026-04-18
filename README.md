@@ -45,8 +45,9 @@ A clean, modern, and fully functional Task Management application. Built with a 
 }
 Run the project:
 
-Bash
+```bash
 dotnet run
+```
 Access Swagger UI at: http://localhost:5000
 
 Frontend Setup
