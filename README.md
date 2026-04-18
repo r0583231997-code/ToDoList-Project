@@ -46,6 +46,7 @@ Run the project:
 
 ```
 dotnet run
+```
 Access Swagger UI at: http://localhost:5000
 Frontend Setup
 Navigate to the Client folder.
@@ -54,6 +55,7 @@ Install dependencies:
 
 ```
 npm install
+```
 Start the application:
 
 ```
