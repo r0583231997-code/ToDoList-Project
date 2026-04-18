@@ -43,9 +43,10 @@ A clean, modern, and fully functional Task Management application. Built with a 
 "ConnectionStrings": { 
     "ToDoDB": "server=localhost;database=todo_db;user=root;password=your_password" 
 }
+```
 Run the project:
 
-```
+```bash
 dotnet run
 ```
 Access Swagger UI at: http://localhost:5000
@@ -55,12 +56,14 @@ Navigate to the Client folder.
 
 Install dependencies:
 
-Bash
+```bash
 npm install
+```
 Start the application:
 
-Bash
+```bash
 npm start
+```
 The app will open at: http://localhost:3000
 
 Developed with ❤️ by Rut 💻
