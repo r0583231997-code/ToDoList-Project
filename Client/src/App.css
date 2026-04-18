@@ -1,0 +1,114 @@
+/* מרכז את כל הדף */
+body{
+    background-color: #98b2d0;
+}
+/* הרקע של כל הדף והמרכוז */
+.page-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; /* שומר על הלוח למעלה אבל עם מרווח */
+  min-height: 100vh;
+  
+  /* צבע רקע עדין - גרדיאנט כחול-אפרפר רך */
+  background: linear-gradient(135deg, #98b2d0 0%, #c3cfe2 100%);
+  
+  /* מרווח מהתקרה - שיניתי ל-120 כדי שיהיה רחוק ונעים */
+  padding-top: 120px; 
+
+  
+  direction: rtl;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* הוספת צל עמוק יותר ללוח כדי שיצוף מעל הרקע */
+.todo-card {
+  background: white;
+  width: 500px;
+  border-radius: 20px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1); /* צל רך ועמוק */
+  overflow: hidden;
+}
+
+/* הכותרת הכחולה */
+.todo-header {
+  background: #4a90e2;
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.todo-header h1 {
+  color: white;
+  margin: 0 0 20px 0;
+  font-size: 36px;
+  font-weight: bold;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+}
+
+/* שורת הקלט */
+.new-todo-input {
+  width: 100%;
+  padding: 15px 20px;
+  border: none;
+  border-radius: 10px;
+  font-size: 18px;
+  outline: none;
+  box-shadow: inset 0 2px 5px rgba(0,0,0,0.05);
+}
+
+/* רשימת המשימות */
+.task-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.task-item {
+  padding: 15px 25px;
+  border-bottom: 1px solid #f0f0f0;
+  transition: 0.2s;
+}
+
+.task-item:hover {
+  background-color: #f9f9f9;
+}
+
+.task-view {
+  display: flex;
+  align-items: center;
+}
+
+.task-label {
+  flex: 1;
+  font-size: 20px;
+  margin: 0 15px;
+  color: #333;
+}
+
+/* משימה שבוצעה */
+.completed .task-label {
+  text-decoration: line-through;
+  color: #aaa;
+}
+
+/* כפתור מחיקה מעוצב */
+.delete-btn {
+  background: #ffeded;
+  color: #ff5c5c;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.2s;
+}
+
+.delete-btn:hover {
+  background: #ff5c5c;
+  color: white;
+}
+
+.task-toggle {
+  width: 22px;
+  height: 22px;
+  cursor: pointer;
+}
