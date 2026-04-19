@@ -1,6 +1,8 @@
 import axios from 'axios';
-
-const apiUrl = "http://localhost:5000"
+console.log("My API URL is:", process.env.REACT_APP_API_URL);
+// לניסיון בלבד - תמחקי את זה אחרי שזה יעבוד
+// const apiUrl = "https://server-yepp.onrender.com";
+const apiUrl = process.env.REACT_APP_API_URL || "http://localhost:5000";
 axios.defaults.baseURL = apiUrl;
 axios.interceptors.response.use(
   response => response, // אם הכל בסדר, פשוט תעביר את התשובה הלאה
