@@ -1,24 +1,25 @@
-FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS base
+# שלב 1: שימוש ב-SDK של .NET 8 כדי לבנות את הקוד
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+WORKDIR /src
+
+# העתקת קובץ הפרויקט (מכיוון שאנחנו כבר בתוך תיקיית Server, הנתיב הוא פשוט שם הקובץ)
+COPY ["TodoApi.csproj", "./"]
+RUN dotnet restore "TodoApi.csproj"
+
+# העתקת שאר הקבצים של השרת
+COPY . .
+
+# בנייה ופרסום של האפליקציה לתיקיית /app/publish
+RUN dotnet publish "TodoApi.csproj" -c Release -o /app/publish /p:UseAppHost=false
+
+# שלב 2: שימוש ב-Runtime קטן ומהיר להרצה
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS final
 WORKDIR /app
 EXPOSE 80
 EXPOSE 443
 
-ENV ASPNETCORE_URLS=http://+:80
+# העתקת התוצאה המוכנה משלב הבנייה
+COPY --from=build /app/publish .
 
-FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/sdk:10.0 AS build
-ARG configuration=Release
-WORKDIR /src
-COPY ["Server/TodoApi.csproj", "Server/"]
-RUN dotnet restore "Server/TodoApi.csproj"
-COPY . .
-WORKDIR "/src/Server"
-RUN dotnet build "TodoApi.csproj" -c $configuration -o /app/build
-
-FROM build AS publish
-ARG configuration=Release
-RUN dotnet publish "TodoApi.csproj" -c $configuration -o /app/publish /p:UseAppHost=false
-
-FROM base AS final
-WORKDIR /app
-COPY --from=publish /app/publish .
+# פקודת ההרצה
 ENTRYPOINT ["dotnet", "TodoApi.dll"]
