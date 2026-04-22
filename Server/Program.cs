@@ -26,11 +26,16 @@ builder.Services.AddDbContext<ToDoDbContext>(options =>
 
 var app = builder.Build();
 
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<ToDoDbContext>();
+    db.Database.EnsureCreated();
+}
+
 app.UseCors("AllowAll");
 
 app.UseSwagger();
-app.UseSwaggerUI(options =>
-{
+app.UseSwaggerUI(options => {
     options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
     options.RoutePrefix = string.Empty;
 });
