@@ -20,8 +20,8 @@ builder.Services.AddCors(options =>
 
 
 
-// פירוק הכתובת לפורמט ש-Npgsql מבין ב-100%
-string connectionString = "Host=dpg-d7jr6cv7f7vs73e0j0p0-a;Database=todo_db_mstx;Username=todo_db_mstx_user;Password=GKjFsf4tIiXpWJVggGgzcfcAO6xWbfmH;Port=5432;Ssl Mode=Require;";
+// קריאת מחרוזת החיבור ממשתני הסביבה (Render)
+string connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
 builder.Services.AddDbContext<ToDoDbContext>(options =>
     options.UseNpgsql(connectionString));
