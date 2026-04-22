@@ -66,4 +66,14 @@ npm start
 ```
 The app will open at: http://localhost:3000
 
+## 🚀 קישורים מהירים לפרויקט
+| רכיב המערכת | תיאור | קישור לצפייה |
+| :--- | :--- | :--- |
+| **Client Side** | ממשק המשתמש (React/JS) | [כניסה לאתר החי](https://client-wkvs.onrender.com/) |
+| **Server Side** | שרת ה-Backend ב-ASP.NET Core | [תיעוד ה-API ב-Swagger](https://server-yepp.onrender.com/index.html) |
+| **Management Service** | שרת Node.js לניהול תשתיות ה-Render | [בדיקת סטטוס סרוויסים (JSON)](https://my-node-service-4ke5.onrender.com/services) |
+
 Developed with ❤️ by Rut 💻
+
+
+
