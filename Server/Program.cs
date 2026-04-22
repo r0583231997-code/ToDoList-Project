@@ -3,44 +3,37 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
-//הסווגר
-// מוסיף שירות שחוקר את ה-Endpoints ב-API
+
 builder.Services.AddEndpointsApiExplorer();
-// מייצר את התיעוד של Swagger
 builder.Services.AddSwaggerGen();
 
-//הכורס
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll", policy =>
     {
-        policy.AllowAnyOrigin()   // מאפשר לכל כתובת לפנות ל-API
-              .AllowAnyMethod()   // מאפשר את כל הפעולות (GET, POST, וכו')
-              .AllowAnyHeader();  // מאפשר לשלוח את כל סוגי ה-Headers
+        policy.AllowAnyOrigin()
+              .AllowAnyMethod()
+              .AllowAnyHeader();
     });
 });
 
-// הזרקת ה-Context - זה מה שחסר לשרת!
-var connectionString = builder.Configuration.GetConnectionString("ToDoDB");
+// שימוש בכתובת הפנימית של Render PostgreSQL
+string connectionString = "postgresql://todo_db_mstx_user:GKjFsf4tIiXpWJVggGgzcfcAO6xWbfmH@dpg-d7jr6cv7f7vs73e0j0p0-a/todo_db_mstx";
+
 builder.Services.AddDbContext<ToDoDbContext>(options =>
-    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
+    options.UseNpgsql(connectionString));
+
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI(options =>
-    {
-        // שורה זו עוזרת למנוע שגיאות ניתוב
-        options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
-        options.RoutePrefix = string.Empty; // זה יפתח את Swagger ישר בכתובת הראשית
-    });
-}
-
-// אומר לשרת להשתמש בפוליסה שהגדרנו למעלה
 app.UseCors("AllowAll");
 
-app.MapGet("/", () => "succsed!");
+app.UseSwagger();
+app.UseSwaggerUI(options =>
+{
+    options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
+    options.RoutePrefix = string.Empty;
+});
 
 app.MapGet("/items", async ([FromServices] ToDoDbContext db) => 
     await db.Items.ToListAsync());
@@ -56,13 +49,12 @@ app.MapPut("/items/{id}", async ([FromServices] ToDoDbContext db, int id, Item i
 {
     var item = await db.Items.FindAsync(id);
     if (item is null) return Results.NotFound();
-
-    item.Name = inputItem.Name; // הוספתי את זה כדי שגם השם יתעדכן
+    item.Name = inputItem.Name;
     item.IsComplete = inputItem.IsComplete; 
-    
     await db.SaveChangesAsync();
     return Results.NoContent();
 });
+
 app.MapDelete("/items/{id}", async ([FromServices] ToDoDbContext db, int id) =>
 {
     if (await db.Items.FindAsync(id) is Item item)
@@ -75,4 +67,3 @@ app.MapDelete("/items/{id}", async ([FromServices] ToDoDbContext db, int id) =>
 });
 
 app.Run();
-
