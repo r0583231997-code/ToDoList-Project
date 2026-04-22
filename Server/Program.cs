@@ -18,12 +18,15 @@ builder.Services.AddCors(options =>
     });
 });
 
-// שימוש בכתובת הפנימית של Render PostgreSQL
-string connectionString = "postgresql://todo_db_mstx_user:GKjFsf4tIiXpWJVggGgzcfcAO6xWbfmH@dpg-d7jr6cv7f7vs73e0j0p0-a/todo_db_mstx";
 
+
+// פירוק הכתובת לפורמט ש-Npgsql מבין ב-100%
+string connectionString = "Host=dpg-d7jr6cv7f7vs73e0j0p0-a;Database=todo_db_mstx;Username=todo_db_mstx_user;Password=GKjFsf4tIiXpWJVggGgzcfcAO6xWbfmH;Port=5432;Ssl Mode=Require;";
 
 builder.Services.AddDbContext<ToDoDbContext>(options =>
-    options.UseNpgsql("postgresql://todo_db_mstx_user:GKjFsf4tIiXpWJVggGgzcfcAO6xWbfmH@dpg-d7jr6cv7f7vs73e0j0p0-a/todo_db_mstx"));
+    options.UseNpgsql(connectionString));
+
+
 var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
