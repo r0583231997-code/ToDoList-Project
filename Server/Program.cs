@@ -21,9 +21,9 @@ builder.Services.AddCors(options =>
 // שימוש בכתובת הפנימית של Render PostgreSQL
 string connectionString = "postgresql://todo_db_mstx_user:GKjFsf4tIiXpWJVggGgzcfcAO6xWbfmH@dpg-d7jr6cv7f7vs73e0j0p0-a/todo_db_mstx";
 
+
 builder.Services.AddDbContext<ToDoDbContext>(options =>
     options.UseNpgsql("postgresql://todo_db_mstx_user:GKjFsf4tIiXpWJVggGgzcfcAO6xWbfmH@dpg-d7jr6cv7f7vs73e0j0p0-a/todo_db_mstx"));
-
 var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
